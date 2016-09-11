@@ -532,7 +532,7 @@ GLfloat gCubeVertexData[216] =
     }
     else
     {
-        [RPScreenRecorder sharedRecorder].cameraEnabled = FALSE;
+        //[RPScreenRecorder sharedRecorder].cameraEnabled = FALSE;
         UIView * v = [RPScreenRecorder sharedRecorder].cameraPreviewView;
         if(v != nil)
            [v removeFromSuperview];
