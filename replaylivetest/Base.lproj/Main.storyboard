@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -39,11 +39,27 @@
                                     <action selector="onstop:" destination="BV1-FR-VrT" eventType="touchUpInside" id="bf7-MK-RYW"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1e-Pl-MkO">
+                                <frame key="frameInset" minX="93" minY="105" width="79" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="camera"/>
+                                <connections>
+                                    <action selector="oncamera:" destination="BV1-FR-VrT" eventType="touchUpInside" id="fgh-QU-a4q"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXN-RQ-zaX">
+                                <frame key="frameInset" minX="199" minY="105" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Mic"/>
+                                <connections>
+                                    <action selector="onmicphone:" destination="BV1-FR-VrT" eventType="touchUpInside" id="YVb-W5-HZQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dZd-aH-i0K" firstAttribute="leading" secondItem="3To-9H-q8D" secondAttribute="trailing" constant="100" id="Kpl-CW-jqi"/>
-                            <constraint firstItem="3To-9H-q8D" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="-8" id="UMO-af-7tq"/>
+                            <constraint firstItem="3To-9H-q8D" firstAttribute="top" secondItem="8aa-yV-Osq" secondAttribute="bottom" constant="-8" id="Wvh-tj-rSj"/>
                             <constraint firstAttribute="leadingMargin" secondItem="3To-9H-q8D" secondAttribute="leading" id="ZKr-bl-5p8"/>
                             <constraint firstItem="dZd-aH-i0K" firstAttribute="top" secondItem="3To-9H-q8D" secondAttribute="top" id="d6U-dK-YT1"/>
                         </constraints>
@@ -51,6 +67,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="118.75" y="123.75"/>
         </scene>
     </scenes>
 </document>

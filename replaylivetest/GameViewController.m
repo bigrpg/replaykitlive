@@ -9,7 +9,7 @@
 #import "GameViewController.h"
 #import <OpenGLES/ES2/glext.h>
 #import <ReplayKit/ReplayKit.h>
-
+#import "IDImagePickerCoordinator.h"
 
 @interface ZLBroadcastControllObserver : NSObject<RPBroadcastControllerDelegate>
 
@@ -22,6 +22,7 @@
     if( error != nil)
         NSLog(@"broadcast finished due to: error:%@",error.description);
     broadcastController.delegate = nil;
+    NSLog(@"broadcast is stopped by some reason");
 }
 
 @end
@@ -30,6 +31,7 @@
 @interface ZLBroadcastViewControllObserver : NSObject<RPBroadcastActivityViewControllerDelegate>
 @property (strong, nonatomic) RPBroadcastController * brcontroller;
 @property (strong, nonatomic) ZLBroadcastControllObserver * brcontrollerDelegate;
+@property (strong, nonatomic) UIViewController * owerVC;
 @end
 
 
@@ -37,6 +39,7 @@
 
 @synthesize    brcontroller;
 @synthesize    brcontrollerDelegate;
+@synthesize    owerVC;
 
 - (void)broadcastActivityViewController:(RPBroadcastActivityViewController *)broadcastActivityViewController didFinishWithBroadcastController:(RPBroadcastController *)broadcastController error:(NSError *)error
 {
@@ -53,6 +56,8 @@
     self.brcontroller = broadcastController;
     if(broadcastController != nil)
     {
+        [RPScreenRecorder sharedRecorder].microphoneEnabled = TRUE;
+        [RPScreenRecorder sharedRecorder].cameraEnabled = TRUE;
         
         [self.brcontroller startBroadcastWithHandler:^(NSError * _Nullable error) {
             if( error != nil)
@@ -65,6 +70,9 @@
             {
                 self.brcontrollerDelegate = [[ZLBroadcastControllObserver alloc] init];
                 self.brcontroller.delegate = self.brcontrollerDelegate;
+                //UIView * v = [RPScreenRecorder sharedRecorder].cameraPreviewView;
+                //[self.owerVC.view addSubview:v];
+                
                 NSLog(@"broadcast live successfully");
             }
             
@@ -159,6 +167,8 @@ GLfloat gCubeVertexData[216] =
     
     GLuint _vertexArray;
     GLuint _vertexBuffer;
+    AVCaptureSession *m_capture;
+    bool cameraOn;
 }
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
@@ -174,6 +184,8 @@ GLfloat gCubeVertexData[216] =
 - (BOOL)linkProgram:(GLuint)prog;
 - (IBAction)onclick:(id)sender;
 - (IBAction)onstop:(id)sender;
+- (IBAction)oncamera:(id)sender;
+- (IBAction)onmicphone:(id)sender;
 - (BOOL)validateProgram:(GLuint)prog;
 @end
 
@@ -198,6 +210,8 @@ GLfloat gCubeVertexData[216] =
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     
     self.delegate = [[ZLBroadcastViewControllObserver alloc] init];
+    self.delegate.owerVC = self;
+    cameraOn = false;
     
     [self setupGL];
 }
@@ -467,6 +481,9 @@ GLfloat gCubeVertexData[216] =
             self.brviewcontroller = broadcastActivityViewController;
             self.brviewcontroller.delegate = self.delegate;
             UIViewController* rootViewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+            UIView * v = [RPScreenRecorder sharedRecorder].cameraPreviewView;
+            [self.view addSubview: v];
+
             //resolved crash in ipad
             if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
             {
@@ -475,6 +492,8 @@ GLfloat gCubeVertexData[216] =
             [rootViewController presentViewController:broadcastActivityViewController animated:YES completion:^{
                 NSLog(@"DIsplay complete!");
             }];
+            
+            //[self open];
         }
     }];
 }
@@ -482,6 +501,13 @@ GLfloat gCubeVertexData[216] =
 - (IBAction)onstop:(id)sender {
     if( self.delegate == nil)
         return;
+    
+    BOOL isbroadcast = self.delegate.brcontroller.isBroadcasting;
+    if( isbroadcast == NO)
+    {
+        NSLog(@"have stopped");
+        return;
+    }
     
     [self.delegate.brcontroller finishBroadcastWithHandler:^(NSError * _Nullable error) {
         
@@ -492,6 +518,32 @@ GLfloat gCubeVertexData[216] =
         self.delegate.brcontrollerDelegate = nil;
         NSLog(@"broadcast live stopped");
     }];
+}
+
+- (IBAction)oncamera:(id)sender {
+    //IDImagePickerCoordinator * imagePickerCoordinator = [IDImagePickerCoordinator new];
+    //[self presentViewController:[imagePickerCoordinator cameraVC] animated:YES completion:nil];
+    
+    if(!cameraOn)
+    {
+        [RPScreenRecorder sharedRecorder].cameraEnabled = TRUE;
+        UIView * v = [RPScreenRecorder sharedRecorder].cameraPreviewView;
+        [self.view addSubview:v];
+    }
+    else
+    {
+        [RPScreenRecorder sharedRecorder].cameraEnabled = FALSE;
+        UIView * v = [RPScreenRecorder sharedRecorder].cameraPreviewView;
+        if(v != nil)
+           [v removeFromSuperview];
+    }
+    cameraOn = !cameraOn;
+
+}
+
+- (IBAction)onmicphone:(id)sender {
+    BOOL enable = [RPScreenRecorder sharedRecorder].microphoneEnabled;
+    [RPScreenRecorder sharedRecorder].microphoneEnabled = !enable;
 }
 
 - (BOOL)validateProgram:(GLuint)prog
@@ -513,6 +565,67 @@ GLfloat gCubeVertexData[216] =
     }
     
     return YES;
+}
+
+-(void)open {
+    NSError *error;
+    m_capture = [[AVCaptureSession alloc]init];
+    AVCaptureDevice *audioDev = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeAudio];
+    if (audioDev == nil)
+    {
+        NSLog(@"Couldn't create audio capture device");
+        return ;
+    }
+    
+    // create mic device
+    AVCaptureDeviceInput *audioIn = [AVCaptureDeviceInput deviceInputWithDevice:audioDev error:&error];
+    if (error != nil)
+    {
+        NSLog(@"Couldn't create audio input");
+        return ;
+    }
+    
+    
+    // add mic device in capture object
+    if ([m_capture canAddInput:audioIn] == NO)
+    {
+        NSLog(@"Couldn't add audio input");
+        return ;
+    }
+    [m_capture addInput:audioIn];
+    
+//    // export audio data
+//    AVCaptureAudioDataOutput *audioOutput = [[AVCaptureAudioDataOutput alloc] init];
+//    [audioOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+//    if ([m_capture canAddOutput:audioOutput] == NO)
+//    {
+//        NSLog(@"Couldn't add audio output");
+//        return ;
+//    }
+//    [m_capture addOutput:audioOutput];
+//    [audioOutput connectionWithMediaType:AVMediaTypeAudio];
+    [m_capture startRunning];
+    return ;
+}
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+//    char szBuf[4096];
+//    int  nSize = sizeof(szBuf);
+//    
+//#if SUPPORT_AAC_ENCODER
+//    if ([self encoderAAC:sampleBuffer aacData:szBuf aacLen:&nSize] == YES)
+//    {
+//        [g_pViewController sendAudioData:szBuf len:nSize channel:0];
+//    }
+//#else //#if SUPPORT_AAC_ENCODER
+//    AudioStreamBasicDescription outputFormat = *(CMAudioFormatDescriptionGetStreamBasicDescription(CMSampleBufferGetFormatDescription(sampleBuffer)));
+//    nSize = CMSampleBufferGetTotalSampleSize(sampleBuffer);
+//    CMBlockBufferRef databuf = CMSampleBufferGetDataBuffer(sampleBuffer);
+//    if (CMBlockBufferCopyDataBytes(databuf, 0, nSize, szBuf) == kCMBlockBufferNoErr)
+//    {
+//        [g_pViewController sendAudioData:szBuf len:nSize channel:outputFormat.mChannelsPerFrame];
+//    }
+//#endif
 }
 
 @end

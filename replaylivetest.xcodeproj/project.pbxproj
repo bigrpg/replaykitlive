@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78A205B91D7C54770035FD89 /* IDImagePickerCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A205B81D7C54770035FD89 /* IDImagePickerCoordinator.m */; };
 		78D50B901D6DD3A000C86F5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D50B8F1D6DD3A000C86F5C /* main.m */; };
 		78D50B931D6DD3A000C86F5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D50B921D6DD3A000C86F5C /* AppDelegate.m */; };
 		78D50B951D6DD3A000C86F5C /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 78D50B941D6DD3A000C86F5C /* Shader.fsh */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		78A205B71D7C54770035FD89 /* IDImagePickerCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDImagePickerCoordinator.h; sourceTree = "<group>"; };
+		78A205B81D7C54770035FD89 /* IDImagePickerCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDImagePickerCoordinator.m; sourceTree = "<group>"; };
 		78D50B8B1D6DD3A000C86F5C /* replaylivetest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = replaylivetest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78D50B8F1D6DD3A000C86F5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		78D50B911D6DD3A000C86F5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -71,6 +74,8 @@
 		78D50B8D1D6DD3A000C86F5C /* replaylivetest */ = {
 			isa = PBXGroup;
 			children = (
+				78A205B71D7C54770035FD89 /* IDImagePickerCoordinator.h */,
+				78A205B81D7C54770035FD89 /* IDImagePickerCoordinator.m */,
 				78D50B911D6DD3A000C86F5C /* AppDelegate.h */,
 				78D50B921D6DD3A000C86F5C /* AppDelegate.m */,
 				78D50B941D6DD3A000C86F5C /* Shader.fsh */,
@@ -178,6 +183,7 @@
 			files = (
 				78D50B931D6DD3A000C86F5C /* AppDelegate.m in Sources */,
 				78D50BAB1D6DD5E000C86F5C /* MyGLKView.m in Sources */,
+				78A205B91D7C54770035FD89 /* IDImagePickerCoordinator.m in Sources */,
 				78D50B9A1D6DD3A000C86F5C /* GameViewController.m in Sources */,
 				78D50B901D6DD3A000C86F5C /* main.m in Sources */,
 			);
@@ -304,7 +310,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wang.com.replaylivetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -317,7 +323,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wang.com.replaylivetest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
