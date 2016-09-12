@@ -200,6 +200,7 @@
 
     if(broadcastActivityViewController != nil)
     {
+        broadcastActivityViewController.delegate = nil;
         [broadcastActivityViewController dismissViewControllerAnimated:YES completion:^{
             
             if(broadcastController != nil)
@@ -208,6 +209,7 @@
                 [RPScreenRecorder sharedRecorder].cameraEnabled = TRUE;
 
                 [broadcastController startBroadcastWithHandler:^(NSError * _Nullable error) {
+                    isSetupping = false;
                     if( error != nil)
                     {
                         NSLog(@"error:%@",error.description);
@@ -231,12 +233,16 @@
             }
             else
             {
+                isSetupping = false;
                 NSLog(@"broadcast setup failed");
             }
             
         }];
     }
-    isSetupping = false;
+    else
+    {
+        isSetupping = false;
+    }
  }
 
 
