@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7881F54B1D86863500C26942 /* ReplaykitLiveCub.m in Sources */ = {isa = PBXBuildFile; fileRef = 7881F54A1D86863500C26942 /* ReplaykitLiveCub.m */; };
 		78A205B91D7C54770035FD89 /* IDImagePickerCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A205B81D7C54770035FD89 /* IDImagePickerCoordinator.m */; };
 		78D50B901D6DD3A000C86F5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D50B8F1D6DD3A000C86F5C /* main.m */; };
 		78D50B931D6DD3A000C86F5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D50B921D6DD3A000C86F5C /* AppDelegate.m */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7881F5491D86863500C26942 /* ReplaykitLiveCub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplaykitLiveCub.h; sourceTree = "<group>"; };
+		7881F54A1D86863500C26942 /* ReplaykitLiveCub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReplaykitLiveCub.m; sourceTree = "<group>"; };
 		78A205B71D7C54770035FD89 /* IDImagePickerCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDImagePickerCoordinator.h; sourceTree = "<group>"; };
 		78A205B81D7C54770035FD89 /* IDImagePickerCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDImagePickerCoordinator.m; sourceTree = "<group>"; };
 		78D50B8B1D6DD3A000C86F5C /* replaylivetest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = replaylivetest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +90,8 @@
 				78D50BA01D6DD3A000C86F5C /* LaunchScreen.storyboard */,
 				78D50BA31D6DD3A000C86F5C /* Info.plist */,
 				78D50B8E1D6DD3A000C86F5C /* Supporting Files */,
+				7881F5491D86863500C26942 /* ReplaykitLiveCub.h */,
+				7881F54A1D86863500C26942 /* ReplaykitLiveCub.m */,
 			);
 			path = replaylivetest;
 			sourceTree = "<group>";
@@ -183,6 +188,7 @@
 			files = (
 				78D50B931D6DD3A000C86F5C /* AppDelegate.m in Sources */,
 				78D50BAB1D6DD5E000C86F5C /* MyGLKView.m in Sources */,
+				7881F54B1D86863500C26942 /* ReplaykitLiveCub.m in Sources */,
 				78A205B91D7C54770035FD89 /* IDImagePickerCoordinator.m in Sources */,
 				78D50B9A1D6DD3A000C86F5C /* GameViewController.m in Sources */,
 				78D50B901D6DD3A000C86F5C /* main.m in Sources */,

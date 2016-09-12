@@ -11,6 +11,8 @@
 #import <ReplayKit/ReplayKit.h>
 #import "IDImagePickerCoordinator.h"
 
+#import "ReplaykitLiveCub.h"
+
 @interface ZLBroadcastControllObserver : NSObject<RPBroadcastControllerDelegate>
 
 @end
@@ -169,6 +171,7 @@ GLfloat gCubeVertexData[216] =
     GLuint _vertexBuffer;
     AVCaptureSession *m_capture;
     bool cameraOn;
+    bool micphone;
 }
 @property (strong, nonatomic) EAGLContext *context;
 @property (strong, nonatomic) GLKBaseEffect *effect;
@@ -212,6 +215,7 @@ GLfloat gCubeVertexData[216] =
     self.delegate = [[ZLBroadcastViewControllObserver alloc] init];
     self.delegate.owerVC = self;
     cameraOn = false;
+    micphone = false;
     
     [self setupGL];
 }
@@ -473,6 +477,13 @@ GLfloat gCubeVertexData[216] =
 }
 
 - (IBAction)onclick:(id)sender {
+    
+    cameraOn = true;
+    micphone = true;
+    
+    [[ReplaykitLiveCub instance] beginBroadcast:[UIApplication sharedApplication].keyWindow.rootViewController openMic:micphone openCamera:cameraOn];
+    return;
+    
     [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler: ^(RPBroadcastActivityViewController *broadcastActivityViewController, NSError *error) {
         if(error)
             NSLog(@"%@", error.localizedDescription);
@@ -499,6 +510,11 @@ GLfloat gCubeVertexData[216] =
 }
 
 - (IBAction)onstop:(id)sender {
+    
+    [[ReplaykitLiveCub instance] stopBroadcast];
+    return;
+    
+    
     if( self.delegate == nil)
         return;
     
@@ -524,6 +540,12 @@ GLfloat gCubeVertexData[216] =
     //IDImagePickerCoordinator * imagePickerCoordinator = [IDImagePickerCoordinator new];
     //[self presentViewController:[imagePickerCoordinator cameraVC] animated:YES completion:nil];
     
+    
+    cameraOn = !cameraOn;
+    [[ReplaykitLiveCub instance] setupCamear:cameraOn];
+    return;
+    
+    
     if(!cameraOn)
     {
         [RPScreenRecorder sharedRecorder].cameraEnabled = TRUE;
@@ -542,6 +564,10 @@ GLfloat gCubeVertexData[216] =
 }
 
 - (IBAction)onmicphone:(id)sender {
+    micphone = !micphone;
+    [[ReplaykitLiveCub instance] setupMicrophone:micphone];
+    return;
+    
     BOOL enable = [RPScreenRecorder sharedRecorder].microphoneEnabled;
     [RPScreenRecorder sharedRecorder].microphoneEnabled = !enable;
 }
