@@ -27,6 +27,8 @@
 
 @synthesize     owerVC;
 @synthesize     brcontroller;
+@synthesize     brviewcontroller;
+@synthesize     delegate;
 
 +(nonnull ReplaykitLiveCub*) instance
 {
@@ -45,6 +47,7 @@
     openCamera = false;
     isSetupping = false;
     self.owerVC = nil;
+    self.delegate = nil;
     return self;
 }
 
@@ -172,7 +175,32 @@
     
     [self setupCamear:false];
     [self setupMicrophone:false];
+    isSetupping = false;
+    
+    [self onStopDelegate];
 
+}
+
+-(void) onStartDelegate:(bool)success
+{
+    if(self.delegate != nil)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate onStart:success];
+        });
+    }
+
+}
+
+-(void) onStopDelegate
+{
+    if(self.delegate != nil)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate onStop];
+        });
+    }
+    
 }
 
 
@@ -213,6 +241,7 @@
                     if( error != nil)
                     {
                         NSLog(@"error:%@",error.description);
+                        [self onStartDelegate:false];
                     }
                     else
                     {
@@ -225,8 +254,10 @@
                         openCamera = false;
                         if(temp)
                            [self setupCamear:temp];
-
+                        
                         NSLog(@"broadcast live successfully");
+                        [self onStartDelegate:true];
+
                     }
                     
                 }];
@@ -235,6 +266,7 @@
             {
                 isSetupping = false;
                 NSLog(@"broadcast setup failed");
+                [self onStartDelegate:false];
             }
             
         }];
@@ -242,6 +274,7 @@
     else
     {
         isSetupping = false;
+        [self onStartDelegate:false];
     }
  }
 
