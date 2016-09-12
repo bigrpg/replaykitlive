@@ -481,7 +481,8 @@ GLfloat gCubeVertexData[216] =
     cameraOn = true;
     micphone = true;
     
-    [[ReplaykitLiveCub instance] beginBroadcast:[UIApplication sharedApplication].keyWindow.rootViewController openMic:micphone openCamera:cameraOn];
+    //[[ReplaykitLiveCub instance] beginBroadcast:[UIApplication sharedApplication].keyWindow.rootViewController openMic:micphone openCamera:cameraOn];
+    [[ReplaykitLiveCub instance] beginBroadcast:self openMic:micphone openCamera:cameraOn];
     return;
     
     [RPBroadcastActivityViewController loadBroadcastActivityViewControllerWithHandler: ^(RPBroadcastActivityViewController *broadcastActivityViewController, NSError *error) {

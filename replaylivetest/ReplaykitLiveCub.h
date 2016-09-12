@@ -5,7 +5,7 @@
 //  Created by zl on 16/9/12.
 //  Copyright © 2016年 wang. All rights reserved.
 //
-
+#ifdef _REPLAYKIT_SUPPORT
 #import <Foundation/Foundation.h>
 #import <ReplayKit/ReplayKit.h>
 
@@ -33,3 +33,6 @@
 @property(nonatomic,strong,nullable) id<RPLiveDelegate>  delegate;
 
 @end
+
+
+#endif

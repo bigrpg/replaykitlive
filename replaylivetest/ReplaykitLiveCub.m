@@ -6,6 +6,8 @@
 //  Copyright © 2016年 wang. All rights reserved.
 //
 
+#ifdef _REPLAYKIT_SUPPORT
+
 #import "ReplaykitLiveCub.h"
 
 
@@ -280,3 +282,5 @@
 
 
 @end
+
+#endif //_REPLAYKIT_SUPPORT
