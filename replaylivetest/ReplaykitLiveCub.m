@@ -42,6 +42,15 @@
     return (ReplaykitLiveCub*)instance;
 }
 
++ (bool)isSupportReplayLive
+{
+    NSString* version = [[UIDevice currentDevice] systemVersion];
+    
+    BOOL _ios90orNewer = [version compare: @"10.0" options: NSNumericSearch] != NSOrderedAscending;
+    
+    return _ios90orNewer;
+}
+
 -(nonnull ReplaykitLiveCub *) init
 {
     self = [super init];
@@ -235,13 +244,16 @@
             
             if(broadcastController != nil)
             {
-                [RPScreenRecorder sharedRecorder].microphoneEnabled = openMic;
+                [RPScreenRecorder sharedRecorder].microphoneEnabled = TRUE;
                 [RPScreenRecorder sharedRecorder].cameraEnabled = TRUE;
 
+                NSLog(@"call startBroadcast,please wait a monment");
                 [broadcastController startBroadcastWithHandler:^(NSError * _Nullable error) {
                     isSetupping = false;
                     if( error != nil)
                     {
+                        [RPScreenRecorder sharedRecorder].microphoneEnabled = FALSE;
+                        [RPScreenRecorder sharedRecorder].cameraEnabled = FALSE;
                         NSLog(@"error:%@",error.description);
                         [self onStartDelegate:false];
                     }
@@ -252,6 +264,7 @@
                         self.brviewcontroller = broadcastActivityViewController;
                         self.brviewcontroller.delegate = self;
                         
+                        [RPScreenRecorder sharedRecorder].microphoneEnabled = openMic;
                         bool temp = openCamera;
                         openCamera = false;
                         if(temp)

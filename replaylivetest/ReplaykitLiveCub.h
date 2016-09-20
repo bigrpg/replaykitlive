@@ -20,6 +20,7 @@
 @interface ReplaykitLiveCub : NSObject<RPBroadcastControllerDelegate,RPBroadcastActivityViewControllerDelegate>
 
 +(nonnull ReplaykitLiveCub*) instance;
++(bool) isSupportReplayLive;
 
 -(bool) isBroadcasting;
 -(bool) isPaused;
